@@ -36,6 +36,31 @@ const App = (props) => {
     cursor: "pointer",
   };
 
+  let persons = null;
+
+  if (toggleState.toggle) {
+    persons = (
+      <div>
+        <Person
+          name={personState.person[0].name}
+          age={personState.person[0].age}
+        />
+        <Person
+          changed={onChangedHandler}
+          name={personState.person[1].name}
+          age={personState.person[1].age}
+          currName={personState.person[1].name}
+        >
+          This is a child
+        </Person>
+        <Person
+          name={personState.person[2].name}
+          age={personState.person[2].age}
+        />
+      </div>
+    );
+  }
+
   return (
     <div className="App">
       <h1>Hello, I am a React App</h1>
@@ -45,26 +70,7 @@ const App = (props) => {
 
       {/* Conditionally rendering using ternarp operators */}
 
-      {toggleState.toggle ? (
-        <div>
-          <Person
-            name={personState.person[0].name}
-            age={personState.person[0].age}
-          />
-          <Person
-            changed={onChangedHandler}
-            name={personState.person[1].name}
-            age={personState.person[1].age}
-            currName={personState.person[1].name}
-          >
-            This is a child
-          </Person>
-          <Person
-            name={personState.person[2].name}
-            age={personState.person[2].age}
-          />
-        </div>
-      ) : null}
+      {persons}
     </div>
   );
 };
