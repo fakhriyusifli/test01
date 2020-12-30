@@ -42,6 +42,9 @@ const App = (props) => {
       <button style={buttonStyle} onClick={toggleNameHandler}>
         Toggle Names
       </button>
+
+      {/* Conditionally rendering using ternarp operators */}
+
       {toggleState.toggle ? (
         <div>
           <Person
