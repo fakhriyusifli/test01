@@ -4,10 +4,10 @@ import Person from "./Person/Person";
 
 const App = (props) => {
   const [personState, setPersonState] = useState({
-    person: [
-      { name: "Telman", age: 22 },
-      { name: "Adil", age: 23 },
-      { name: "Mirze", age: 25 },
+    persons: [
+      { id: "erg215re1g", name: "Telman", age: 22 },
+      { id: "62rg62gr62", name: "Adil", age: 23 },
+      { id: "9uk9u4kuk9", name: "Mirze", age: 25 },
     ],
   });
 
@@ -18,14 +18,10 @@ const App = (props) => {
     setToggleState({ toggle: !doShow });
   };
 
-  const onChangedHandler = (event) => {
-    setPersonState({
-      person: [
-        { name: "Telman", age: 37 },
-        { name: event.target.value, age: 23 },
-        { name: "Karam", age: 25 },
-      ],
-    });
+  const deletePersonHandler = (personIndex) => {
+    const persons = [...personState.persons];
+    persons.splice(personIndex, 1);
+    setPersonState({ persons: persons });
   };
 
   const buttonStyle = {
@@ -41,22 +37,16 @@ const App = (props) => {
   if (toggleState.toggle) {
     persons = (
       <div>
-        <Person
-          name={personState.person[0].name}
-          age={personState.person[0].age}
-        />
-        <Person
-          changed={onChangedHandler}
-          name={personState.person[1].name}
-          age={personState.person[1].age}
-          currName={personState.person[1].name}
-        >
-          This is a child
-        </Person>
-        <Person
-          name={personState.person[2].name}
-          age={personState.person[2].age}
-        />
+        {personState.persons.map((person, index) => {
+          return (
+            <Person
+              key={person.id}
+              click={deletePersonHandler}
+              name={person.name}
+              age={person.age}
+            />
+          );
+        })}
       </div>
     );
   }
@@ -67,9 +57,6 @@ const App = (props) => {
       <button style={buttonStyle} onClick={toggleNameHandler}>
         Toggle Names
       </button>
-
-      {/* Conditionally rendering using ternarp operators */}
-
       {persons}
     </div>
   );
