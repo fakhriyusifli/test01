@@ -13,14 +13,34 @@ const App = (props) => {
 
   const [toggleState, setToggleState] = useState({ toggle: true });
 
+  // TOGGLE PERSONS HANDLER
   const toggleNameHandler = () => {
     const doShow = toggleState.toggle;
     setToggleState({ toggle: !doShow });
   };
 
+  // DELETE PERSON HANDLERE
   const deletePersonHandler = (personIndex) => {
     const persons = [...personState.persons];
     persons.splice(personIndex, 1);
+    console.log(persons);
+    setPersonState({ persons: persons });
+  };
+
+  // CHANGE HANDLER
+  const changedHandler = (event, id) => {
+    console.log(id);
+    const personIndex = personState.persons.findIndex((p) => {
+      return p.id === id;
+    });
+    console.log(personIndex);
+
+    const person = { ...personState.persons[personIndex] };
+    person.name = event.target.value;
+
+    const persons = [...personState.persons];
+    persons[personIndex] = person;
+
     setPersonState({ persons: persons });
   };
 
@@ -40,10 +60,11 @@ const App = (props) => {
         {personState.persons.map((person, index) => {
           return (
             <Person
-              key={person.id}
-              click={deletePersonHandler}
               name={person.name}
               age={person.age}
+              changed={(e) => changedHandler(e, person.id)}
+              key={person.id}
+              click={() => deletePersonHandler(index)}
             />
           );
         })}
