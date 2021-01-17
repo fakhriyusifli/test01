@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person";
 
 const App = (props) => {
@@ -51,6 +52,10 @@ const App = (props) => {
     border: "1px solid blue",
     padding: "8px",
     cursor: "pointer",
+    ":hover": {
+      backgroundColor: "lightgreen",
+      color: "black",
+    },
   };
 
   let persons = null;
@@ -72,6 +77,10 @@ const App = (props) => {
       </div>
     );
     buttonStyle.backgroundColor = "red";
+    buttonStyle[":hover"] = {
+      backgroundColor: "salmon",
+      color: "black",
+    };
   }
 
   // Dynamic styling
@@ -84,15 +93,19 @@ const App = (props) => {
   }
 
   return (
-    <div className="App">
-      <h1>Hello, I am a React App</h1>
-      <p className={classes.join(" ")}>This is really working beaaatch!</p>
-      <button style={buttonStyle} onClick={toggleNameHandler}>
-        Toggle Names
-      </button>
-      {persons}
-    </div>
+    //app needed to be wrapped between StyleRoot component for advanced features of Radium like media query
+    <StyleRoot>
+      <div className="App">
+        <h1>Hello, I am a React App</h1>
+        <p className={classes.join(" ")}>This is really working beaaatch!</p>
+        <button style={buttonStyle} onClick={toggleNameHandler}>
+          Toggle Names
+        </button>
+        {persons}
+      </div>
+    </StyleRoot>
   );
 };
 
-export default App;
+//higher order component
+export default Radium(App);
