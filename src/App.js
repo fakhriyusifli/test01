@@ -11,7 +11,7 @@ const App = (props) => {
     ],
   });
 
-  const [toggleState, setToggleState] = useState({ toggle: true });
+  const [toggleState, setToggleState] = useState({ toggle: false });
 
   // TOGGLE PERSONS HANDLER
   const toggleNameHandler = () => {
@@ -45,7 +45,8 @@ const App = (props) => {
   };
 
   const buttonStyle = {
-    backgroundColor: "white",
+    backgroundColor: "green",
+    color: "white",
     font: "inherit",
     border: "1px solid blue",
     padding: "8px",
@@ -70,11 +71,22 @@ const App = (props) => {
         })}
       </div>
     );
+    buttonStyle.backgroundColor = "red";
+  }
+
+  // Dynamic styling
+  const classes = [];
+  if (personState.persons.length <= 2) {
+    classes.push("red");
+  }
+  if (personState.persons.length <= 1) {
+    classes.push("bold");
   }
 
   return (
     <div className="App">
       <h1>Hello, I am a React App</h1>
+      <p className={classes.join(" ")}>This is really working beaaatch!</p>
       <button style={buttonStyle} onClick={toggleNameHandler}>
         Toggle Names
       </button>
