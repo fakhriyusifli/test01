@@ -1,9 +1,23 @@
 import React, { useState } from "react";
-import "./App.css";
-import Radium, { StyleRoot } from "radium";
 import Person from "./Person/Person";
+import styled from "styled-components";
+import "./App.css";
 
-const App = (props) => {
+const StyledButton = styled.button`
+  background-color: ${(props) => (props.alt ? "red" : "green")};
+  color: white;
+  font: inherit;
+  border: 1px solid blue;
+  padding: 8px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${(props) => (props.alt ? "salmon" : "lightgreen")};
+    color: black;
+  }
+`;
+
+const App = () => {
   const [personState, setPersonState] = useState({
     persons: [
       { id: "erg215re1g", name: "Telman", age: 22 },
@@ -45,19 +59,6 @@ const App = (props) => {
     setPersonState({ persons: persons });
   };
 
-  const buttonStyle = {
-    backgroundColor: "green",
-    color: "white",
-    font: "inherit",
-    border: "1px solid blue",
-    padding: "8px",
-    cursor: "pointer",
-    ":hover": {
-      backgroundColor: "lightgreen",
-      color: "black",
-    },
-  };
-
   let persons = null;
 
   if (toggleState.toggle) {
@@ -76,11 +77,6 @@ const App = (props) => {
         })}
       </div>
     );
-    buttonStyle.backgroundColor = "red";
-    buttonStyle[":hover"] = {
-      backgroundColor: "salmon",
-      color: "black",
-    };
   }
 
   // Dynamic styling
@@ -93,19 +89,16 @@ const App = (props) => {
   }
 
   return (
-    //app needed to be wrapped between StyleRoot component for advanced features of Radium like media query
-    <StyleRoot>
-      <div className="App">
-        <h1>Hello, I am a React App</h1>
-        <p className={classes.join(" ")}>This is really working beaaatch!</p>
-        <button style={buttonStyle} onClick={toggleNameHandler}>
-          Toggle Names
-        </button>
-        {persons}
-      </div>
-    </StyleRoot>
+    <div className="App">
+      <h1>Hello, I am a React App</h1>
+      <h2>Click a name to delete.</h2>
+      <p className={classes.join(" ")}>This is really working beaaatch!</p>
+      <StyledButton alt={toggleState.toggle} onClick={toggleNameHandler}>
+        Toggle Names
+      </StyledButton>
+      {persons}
+    </div>
   );
 };
 
-//higher order component
-export default Radium(App);
+export default App;
